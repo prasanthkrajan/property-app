@@ -8,13 +8,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container , Row, Col, Nav, Navbar} from 'react-bootstrap' 
 
 function App() {
+  const currentUserObj = JSON.parse(localStorage.getItem('currentUser'))
   const [ query, setQuery ] = useState('') 
   const [ data, setData ] = useState([])
   const [ showLogin, setShowLogin ] = useState(false)
-  const [ userLoggedIn, setUserLoggedIn ] = useState(localStorage.getItem('currentUser') ? true : false)
+  const [ userLoggedIn, setUserLoggedIn ] = useState(currentUserObj ? true : false)
+  // const [ isUserAdmin, setIsUserAdmin ] = useState(currentUserObj['admin'])
 
   useEffect(() => {
-    console.log('currentUser', localStorage.getItem('currentUser'))
     backendAPI.get(`/properties${query}`)
     .then((response) => {
       handleApiCallSuccess(response)
@@ -25,8 +26,6 @@ function App() {
   }, [query]);
 
   const handleApiCallSuccess = (response) => {
-    console.log('GET status', response.status);
-    console.log('GET data', response.data)
     setData(response.data)
   }
 
@@ -35,7 +34,6 @@ function App() {
   }
 
   const handleFilterSubmit = (query) => {
-    console.log('query', query)
     setQuery(query)
   }
 
@@ -53,6 +51,8 @@ function App() {
   }
 
   const handleLoginSubmit = () => {
+    setShowLogin(false)
+    setUserLoggedIn(true)
   }
 
   return (
@@ -79,7 +79,9 @@ function App() {
                 title={item['title']}
                 rent={item['rent']}
                 fullAddress={item['full_address']}
-                closestMrt={item['closest_mrt']} />
+                closestMrt={item['closest_mrt']} 
+                showFavButton={userLoggedIn}
+                showAdminButtons={currentUserObj ? currentUserObj['admin'] : false}/>
             </Col>
             )
           }

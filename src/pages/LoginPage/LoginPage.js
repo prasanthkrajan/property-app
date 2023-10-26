@@ -24,7 +24,8 @@ function LoginPage({ showModal, onModalClose, onLoginSubmit }) {
   const handleApiCallSuccess = (response) => {
     console.log('GET status', response.status);
     console.log('GET data', response.data)
-    localStorage.setItem("currentUser", response.data)
+    localStorage.setItem("currentUser", JSON.stringify(response.data))
+    onLoginSubmit(true)
   }
 
   const handleApiCallFailure = (error) => {
