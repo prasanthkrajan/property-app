@@ -4,12 +4,12 @@ import './DeletePage.css';
 import { Form, Modal, Button} from 'react-bootstrap'; 
 import backendAPI from "../../api/backendapi";   
 
-function DeletePage({ showModal, onModalClose, onDeleteSubmit, resourceId, resourceTitle }) {
+function DeletePage({ showModal, onModalClose, onDeleteSubmit, resource }) {
   const currentUserObj = JSON.parse(localStorage.getItem('currentUser'))
   const config = currentUserObj ? {headers: { Authorization: `Bearer ${currentUserObj['auth_token']}` }} : {}
   
   const handleDelete = () => {
-    backendAPI.delete(`/properties/${resourceId}`, config)
+    backendAPI.delete(`/properties/${resource['id']}`, config)
     .then((response) => {
       handleApiCallSuccess(response)
     })
@@ -21,7 +21,7 @@ function DeletePage({ showModal, onModalClose, onDeleteSubmit, resourceId, resou
   const handleApiCallSuccess = (response) => {
     console.log('GET status', response.status);
     console.log('GET data', response.data)
-    onDeleteSubmit(resourceId);
+    onDeleteSubmit(resource['id']);
     onModalClose();
   }
 
@@ -33,7 +33,7 @@ function DeletePage({ showModal, onModalClose, onDeleteSubmit, resourceId, resou
     <div className="modal show" style={{ display: 'block', position: 'initial' }}>
       <Modal show={showModal}>
         <Modal.Header>
-          <Modal.Title>Are you sure you want to delete this property? {resourceTitle}</Modal.Title>
+          <Modal.Title>Are you sure you want to delete this property? {resource['title']}</Modal.Title>
         </Modal.Header>
 
         <Modal.Footer>

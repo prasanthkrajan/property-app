@@ -62,6 +62,13 @@ function App() {
     setData(dataClone)
   }
 
+  const handleCardEdit = (card) => {
+    const dataClone = data.map(x => {
+      return x['id'] == card['id'] ? card : x
+    })
+    setData(dataClone)
+  }
+
   return (
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
@@ -82,15 +89,11 @@ function App() {
             data.map((item,key) =>
             <Col>
               <PropertyCard 
-                id={item['id']}
-                img={item['image_url']}
-                title={item['title']}
-                rent={item['rent']}
-                fullAddress={item['full_address']}
-                closestMrt={item['closest_mrt']} 
+                resource={item}
                 showFavButton={userLoggedIn}
                 showAdminButtons={currentUserObj ? currentUserObj['admin'] : false}
-                onCardDelete={handleCardDelete}/>
+                onCardDelete={handleCardDelete}
+                onCardEdit={handleCardEdit}/>
             </Col>
             )
           }
