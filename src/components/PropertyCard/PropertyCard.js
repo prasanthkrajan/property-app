@@ -1,6 +1,5 @@
 // PropertyCard.js
 import './PropertyCard.css';
-import 'bootstrap/dist/css/bootstrap.min.css';  
 import { Card, Button } from 'react-bootstrap';  
 
 function PropertyCard({ img, title, rent, fullAddress, closestMrt}) {

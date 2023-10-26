@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { districts } from "../../utils/districts";
 import Form from 'react-bootstrap/Form';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import './Filter.css';
 
 function Filter({onSubmitHandler}) {
