@@ -59,6 +59,7 @@ function App() {
   const handleLogoutClick = () => {
     setUserLoggedIn(false)
     localStorage.removeItem('currentUser')
+    retrieveAll()
   }
 
   const handleLoginClose = () => {
