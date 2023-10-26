@@ -9,12 +9,17 @@ function PropertyCard({ id, img, title, rent, fullAddress, closestMrt, showFavBu
  
   const handleDeleteClose = () => {
     setShowDelete(false)
-    onCardDelete(id)
   }
 
   return(
     <>
-      <DeletePage showModal={showDelete} resourceId={id} resourceTitle={title} onModalClose={handleDeleteClose}/>
+      <DeletePage 
+        showModal={showDelete} 
+        resourceId={id} 
+        resourceTitle={title} 
+        onModalClose={handleDeleteClose}
+        onDeleteSubmit={onCardDelete}
+      />
       <Card>  
         <Card.Img variant="top" src={img} />  
         <Card.Body>  

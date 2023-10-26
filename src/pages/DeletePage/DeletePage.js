@@ -21,6 +21,7 @@ function DeletePage({ showModal, onModalClose, onDeleteSubmit, resourceId, resou
   const handleApiCallSuccess = (response) => {
     console.log('GET status', response.status);
     console.log('GET data', response.data)
+    onDeleteSubmit(resourceId);
     onModalClose();
   }
 
