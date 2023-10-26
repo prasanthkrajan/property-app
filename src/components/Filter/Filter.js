@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { districts } from "../../utils/districts";
 import './Filter.css';
 
-function Filter({value, onChange}) {
+function Filter({onSubmitHandler}) {
   const [ selectedCity, setSelectedCity ] = useState('Taipei');
   const [ currentDistricts, setCurrentDistricts ] = useState(districts.find(o => o.city === selectedCity)['districts'])
   const [ checkedDistricts, setCheckedDistricts] = useState(
@@ -50,6 +50,29 @@ function Filter({value, onChange}) {
 
   const handleClosestMrtChange = (event) => {
     setClosestMrt(event.target.value)
+  }
+
+  const handleFilterSubmit = () => {
+    let initialQuery = '?'
+    if (selectedCity) {
+      initialQuery = `${initialQuery}&city=${selectedCity}`
+    }
+    if (districtsList) {
+      initialQuery = `${initialQuery}&district=${districtsList}`
+    }
+    if (bedroomNumber) {
+      initialQuery = `${initialQuery}&district=${districtsList}`
+    }
+    if (rentLowerBound) {
+      initialQuery = `${initialQuery}&rent_gt=${rentLowerBound}`
+    }
+    if (rentUpperBound) {
+      initialQuery = `${initialQuery}&rent_lt=${rentUpperBound}`
+    }
+    if (closestMrt) {
+      initialQuery = `${initialQuery}&closest_mrt=${closestMrt}`
+    }
+    onSubmitHandler(initialQuery)
   }
 
 	return (
@@ -129,6 +152,7 @@ function Filter({value, onChange}) {
           onChange={handleClosestMrtChange}
         />
       </div>
+      <button onClick={handleFilterSubmit}>Search</button>
     </>
   )
 }
