@@ -1,6 +1,8 @@
 // Filter.js
 import { useState } from 'react';
 import { districts } from "../../utils/districts";
+import Form from 'react-bootstrap/Form';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import './Filter.css';
 
 function Filter({onSubmitHandler}) {
@@ -78,41 +80,36 @@ function Filter({onSubmitHandler}) {
 	return (
     <>
       <div>
-        <label htmlFor="city"> City: </label>
-        <select
-          name="city"
-          id='city'
-          value={selectedCity}
+        <label htmlFor="districts"> City: </label>
+        <Form.Select 
           onChange={handleCityChange}
-        >
+          value={selectedCity}>
           <option value="Taipei">Taipei</option>
           <option value="New Taipei">New Taipei</option>
-        </select>
+        </Form.Select>
       </div>
       <div>
         <label htmlFor="districts"> Districts: </label>
-        <ul className='districts-list'>
-          { currentDistricts.map((name, index) => {
-            return (
-              <li key={index}>
-                <div className="districts-list-item">
-                  <div className="left-section">
-                    <input
-                      type="checkbox"
-                      id={`custom-checkbox-${index}`}
-                      name={name}
-                      value={name}
-                      checked={checkedDistricts[index]}
-                      onChange={() => handleDistrictsChange(index)}
-                    />
-                    <label htmlFor={`custom-checkbox-${index}`}>{name}</label>
-                  </div>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <Form>
+          <div className="districts-list-item" className="mb-3">
+            { currentDistricts.map((name, index) => {
+              return (
+                
+                  <Form.Check
+                    inline
+                    label={`${name}`}
+                    name="group1"
+                    type='checkbox'
+                    id={`inline-checkbox-${index}`}
+                  />
+                
+              );
+            })}
+          </div>
+        </Form>
       </div>
+      
+      
       <div>
         <label htmlFor="bedroomNumber"> No. of Bedrooms: </label>
         <input
