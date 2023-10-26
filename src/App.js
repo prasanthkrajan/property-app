@@ -55,6 +55,13 @@ function App() {
     setUserLoggedIn(true)
   }
 
+  const handleCardDelete = (cardId) => {
+    const dataClone = data.filter(x => {
+      return x['id'] != cardId;
+    })
+    setData(dataClone)
+  }
+
   return (
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
@@ -75,13 +82,15 @@ function App() {
             data.map((item,key) =>
             <Col>
               <PropertyCard 
+                id={item['id']}
                 img={item['image_url']}
                 title={item['title']}
                 rent={item['rent']}
                 fullAddress={item['full_address']}
                 closestMrt={item['closest_mrt']} 
                 showFavButton={userLoggedIn}
-                showAdminButtons={currentUserObj ? currentUserObj['admin'] : false}/>
+                showAdminButtons={currentUserObj ? currentUserObj['admin'] : false}
+                onCardDelete={handleCardDelete}/>
             </Col>
             )
           }
