@@ -4,8 +4,11 @@ import './PropertyCard.css';
 import { Card, Button } from 'react-bootstrap'; 
 import DeletePage from '../../pages/DeletePage/DeletePage'; 
 import EditPage from '../../pages/EditPage/EditPage';
+import backendAPI from "../../api/backendapi"; 
 
 function PropertyCard({ resource, showFavButton, showAdminButtons, onCardDelete, onCardEdit}) {
+  const currentUserObj = JSON.parse(localStorage.getItem('currentUser'))
+  const config = currentUserObj ? {headers: { Authorization: `Bearer ${currentUserObj['auth_token']}` }} : {}
   const [ showDelete, setShowDelete ] = useState(false)
   const [ showEdit, setShowEdit ] = useState(false)
  
@@ -15,6 +18,28 @@ function PropertyCard({ resource, showFavButton, showAdminButtons, onCardDelete,
 
   const handleEditClose = () => {
     setShowEdit(false)
+  }
+
+  const handleFavSubmit = () => {
+    backendAPI.post('/favourite_properties', {
+      user_id: currentUserObj['id'],
+      property_id: resource['id']
+    }, config)
+    .then((response) => {
+      handleApiCallSuccess(response)
+    })
+    .catch((error) => {
+      handleApiCallFailure(error)
+    });
+  }
+
+  const handleApiCallSuccess = (response) => {
+    console.log('GET status', response.status);
+    console.log('GET data', response.data)
+  }
+
+  const handleApiCallFailure = (error) => {
+    console.log(error.message);
   }
 
   return(
@@ -54,7 +79,7 @@ function PropertyCard({ resource, showFavButton, showAdminButtons, onCardDelete,
           {
             showFavButton ? 
             <Card.Text>
-              <Button variant="primary">Favourite</Button> 
+              <Button variant="primary" onClick={handleFavSubmit}>Favourite</Button> 
             </Card.Text> : null
           }
         </Card.Body>  

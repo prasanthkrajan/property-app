@@ -9,28 +9,43 @@ import {Container , Row, Col, Nav, Navbar} from 'react-bootstrap'
 
 function App() {
   const currentUserObj = JSON.parse(localStorage.getItem('currentUser'))
+  const config = currentUserObj ? {headers: { Authorization: `Bearer ${currentUserObj['auth_token']}` }} : {}
+  
   const [ query, setQuery ] = useState('') 
   const [ data, setData ] = useState([])
   const [ showLogin, setShowLogin ] = useState(false)
   const [ userLoggedIn, setUserLoggedIn ] = useState(currentUserObj ? true : false)
-  // const [ isUserAdmin, setIsUserAdmin ] = useState(currentUserObj['admin'])
 
   useEffect(() => {
-    backendAPI.get(`/properties${query}`)
-    .then((response) => {
-      handleApiCallSuccess(response)
-    })
-    .catch((error) => {
-      handleApiCallFailure(error)
-    });
+    retrieveAll();
   }, [query]);
 
-  const handleApiCallSuccess = (response) => {
-    setData(response.data)
+  const retrieveAll = () => {
+    backendAPI.get(`/properties${query}`)
+    .then((response) => {
+      setData(response.data)
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
   }
 
-  const handleApiCallFailure = (error) => {
-    console.log(error.message);
+  const retrieveFavourites = () => {
+    backendAPI.get(`/favourite_properties`, config)
+    .then((response) => {
+      //handleApiCallSuccess(response)
+      console.log('GET status', response.status);
+      console.log('GET data', response.data)
+      const propertyIds = response.data.map(x => x['property_id'])
+      const dataClone = data.filter(x => {
+        return propertyIds.includes(x['id'])
+      })
+      setData(dataClone)
+    })
+    .catch((error) => {
+      //handleApiCallFailure(error)
+      console.log(error.message);
+    });
   }
 
   const handleFilterSubmit = (query) => {
@@ -57,14 +72,14 @@ function App() {
 
   const handleCardDelete = (cardId) => {
     const dataClone = data.filter(x => {
-      return x['id'] != cardId;
+      return x['id'] !== cardId;
     })
     setData(dataClone)
   }
 
   const handleCardEdit = (card) => {
     const dataClone = data.map(x => {
-      return x['id'] == card['id'] ? card : x
+      return x['id'] === card['id'] ? card : x
     })
     setData(dataClone)
   }
@@ -83,6 +98,17 @@ function App() {
       </Navbar>
       <LoginPage showModal={showLogin} onModalClose={handleLoginClose} onLoginSubmit={handleLoginSubmit}/>
       <Filter onSubmitHandler={handleFilterSubmit}/>
+      {
+        userLoggedIn ? 
+        <Nav variant="pills" defaultActiveKey="all">
+          <Nav.Item>
+            <Nav.Link eventKey="all" onClick={() => retrieveAll()}>All</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+          <Nav.Link eventKey="favourites" onClick={() => retrieveFavourites()}>Favourites</Nav.Link>
+          </Nav.Item>
+        </Nav> : null
+      }
       <Container className='p-4'>  
         <Row xs="3">
           {
