@@ -54,7 +54,7 @@ function Filter({onSubmitHandler}) {
   }
 
   const handleFilterSubmit = () => {
-    let initialQuery = '?'
+    let initialQuery = ''
     if (selectedCity) {
       initialQuery = `${initialQuery}&city=${selectedCity}`
     }

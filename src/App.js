@@ -22,9 +22,9 @@ function App() {
   }, [query]);
 
   const retrieveNextPage = () => {
+    console.log('fire')
     const nextPage = currentPage + 1
-    console.log('API call', `/properties${query}&page=${nextPage}`)
-    backendAPI.get(`/properties${query}`)
+    backendAPI.get(`/properties?${query}&page=${nextPage}`)
     .then((response) => {
       console.log('GET data', response.data)
       setData(response.data)
@@ -37,8 +37,8 @@ function App() {
 
   const retrievePrevPage = () => {
     const prevPage =  Math.max(1, currentPage - 1)
-    console.log('API call', `/properties${query}&page=${prevPage}`)
-    backendAPI.get(`/properties${query}`)
+    console.log('API call', `/properties?${query}&page=${prevPage}`)
+    backendAPI.get(`/properties?${query}`)
     .then((response) => {
       console.log('GET data', response.data)
       setData(response.data)
@@ -50,8 +50,7 @@ function App() {
   }
 
   const retrieveAll = () => {
-    console.log('API call', `/properties${query}`)
-    backendAPI.get(`/properties${query}`)
+    backendAPI.get(`/properties?${query}`)
     .then((response) => {
       console.log('GET data', response.data)
       setData(response.data)
@@ -84,6 +83,7 @@ function App() {
   const handleFilterSubmit = (query) => {
     console.log('from filter', query)
     setQuery(query)
+    setCurrentPage(1)
   }
 
   const handleLoginClick = () => {
