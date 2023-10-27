@@ -104,14 +104,23 @@ function App() {
       <Filter onSubmitHandler={handleFilterSubmit}/>
       {
         userLoggedIn ? 
-        <Nav variant="pills" defaultActiveKey="all">
-          <Nav.Item>
-            <Nav.Link eventKey="all" onClick={() => retrieveAll()}>All</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-          <Nav.Link eventKey="favourites" onClick={() => retrieveFavourites()}>Favourites</Nav.Link>
-          </Nav.Item>
-        </Nav> : null
+        <Container>
+          <Row>
+            <Col>
+              <Nav variant="pills" defaultActiveKey="all" className="justify-content-md-center">
+                <Nav.Item>
+                  <Nav.Link eventKey="all" onClick={() => retrieveAll()}>All</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                <Nav.Link eventKey="favourites" onClick={() => retrieveFavourites()}>Favourites</Nav.Link>
+                </Nav.Item>
+              </Nav>
+            </Col>
+          </Row>
+          <br/>
+        </Container>
+        
+        : <br/>
       }
       <Container fluid>  
         <Row xs="3">

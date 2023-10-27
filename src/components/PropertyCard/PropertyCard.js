@@ -44,18 +44,6 @@ function PropertyCard({ resource, showFavButton, showAdminButtons, onCardDelete,
 
   return(
     <>
-      <DeletePage 
-        showModal={showDelete} 
-        resource={resource}
-        onModalClose={handleDeleteClose}
-        onDeleteSubmit={onCardDelete}
-      />
-      <EditPage 
-        showModal={showEdit} 
-        resource={resource}
-        onModalClose={handleEditClose}
-        onEditSubmit={onCardEdit}
-      />
       <Card>  
         <Card.Img variant="top" src={resource['image_url']} />  
         <Card.Body>  
@@ -84,6 +72,18 @@ function PropertyCard({ resource, showFavButton, showAdminButtons, onCardDelete,
           }
         </Card.Body>  
       </Card>
+      <DeletePage 
+        showModal={showDelete} 
+        resource={resource}
+        onModalClose={handleDeleteClose}
+        onDeleteSubmit={onCardDelete}
+      />
+      <EditPage 
+        showModal={showEdit} 
+        resource={resource}
+        onModalClose={handleEditClose}
+        onEditSubmit={onCardEdit}
+      />
     </>  
   )
 }

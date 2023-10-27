@@ -78,6 +78,7 @@ function Filter({onSubmitHandler}) {
 
 	return (
   	<>
+			<br/>
 			<Container>
 				<Row className="justify-content-md-center">
 					<Form.Label htmlFor="city">City</Form.Label>
@@ -151,6 +152,7 @@ function Filter({onSubmitHandler}) {
 				</Row>
 				<Button onClick={handleFilterSubmit}>Search</Button>
 			</Container>
+			<br/>
     </>
   )
 }
