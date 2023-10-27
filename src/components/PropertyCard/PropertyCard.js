@@ -1,6 +1,5 @@
 // PropertyCard.js
 import { useState } from 'react';
-import './PropertyCard.css';
 import { Card, Button, Container, Row, Col } from 'react-bootstrap'; 
 import DeletePage from '../../pages/DeletePage/DeletePage'; 
 import EditPage from '../../pages/EditPage/EditPage';
@@ -56,6 +55,9 @@ function PropertyCard({ resource, showFavButton, showAdminButtons, onCardDelete,
           </Card.Text> 
           <Card.Text>  
             Closest MRT: {resource['closest_mrt']}
+          </Card.Text> 
+          <Card.Text>  
+            Floor Size (Ping): {resource['floor_size_in_ping']}
           </Card.Text> 
           <Card.Text>  
             Bedroom: {resource['bedroom']}, Bath: {resource['bathroom']}

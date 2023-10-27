@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import Filter from './components/Filter/Filter';
+import Sort from './components/Sort/Sort';
 import PropertyCard from './components/PropertyCard/PropertyCard';
 import LoginPage from './pages/LoginPage/LoginPage';
 import backendAPI from "./api/backendapi";
@@ -22,7 +23,6 @@ function App() {
   }, [query]);
 
   const retrieveNextPage = () => {
-    console.log('fire')
     const nextPage = currentPage + 1
     backendAPI.get(`/properties?${query}&page=${nextPage}`)
     .then((response) => {
@@ -119,6 +119,11 @@ function App() {
     setData(dataClone)
   }
 
+  const handleSortSubmit = (sortQuery) => {
+    const composedQuery = `${query}${sortQuery}`
+    setQuery(composedQuery)
+  }
+
   return (
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
@@ -133,6 +138,7 @@ function App() {
       </Navbar>
       <LoginPage showModal={showLogin} onModalClose={handleLoginClose} onLoginSubmit={handleLoginSubmit}/>
       <Filter onSubmitHandler={handleFilterSubmit}/>
+      <Sort onSubmitHandler={handleSortSubmit}/>
       <span>{`Page: ${currentPage}`}</span>
       <Container>
         <Row>

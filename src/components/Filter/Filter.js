@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { districts } from "../../utils/districts";
 import { Form, InputGroup, Button, Row, Col, Container } from 'react-bootstrap' 
-import './Filter.css';
 
 function Filter({onSubmitHandler}) {
   const [ selectedCity, setSelectedCity ] = useState('Taipei');
