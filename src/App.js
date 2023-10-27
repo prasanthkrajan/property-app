@@ -15,10 +15,39 @@ function App() {
   const [ data, setData ] = useState([])
   const [ showLogin, setShowLogin ] = useState(false)
   const [ userLoggedIn, setUserLoggedIn ] = useState(currentUserObj ? true : false)
+  const [ currentPage, setCurrentPage ] = useState(1)
 
   useEffect(() => {
     retrieveAll();
   }, [query]);
+
+  const retrieveNextPage = () => {
+    const nextPage = currentPage + 1
+    console.log('API call', `/properties${query}&page=${nextPage}`)
+    backendAPI.get(`/properties${query}`)
+    .then((response) => {
+      console.log('GET data', response.data)
+      setData(response.data)
+      setCurrentPage(nextPage)
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+  }
+
+  const retrievePrevPage = () => {
+    const prevPage =  Math.max(1, currentPage - 1)
+    console.log('API call', `/properties${query}&page=${prevPage}`)
+    backendAPI.get(`/properties${query}`)
+    .then((response) => {
+      console.log('GET data', response.data)
+      setData(response.data)
+      setCurrentPage(prevPage)
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+  }
 
   const retrieveAll = () => {
     console.log('API call', `/properties${query}`)
@@ -26,6 +55,7 @@ function App() {
     .then((response) => {
       console.log('GET data', response.data)
       setData(response.data)
+      setCurrentPage(1)
     })
     .catch((error) => {
       console.log(error.message);
@@ -43,6 +73,7 @@ function App() {
         return propertyIds.includes(x['id'])
       })
       setData(dataClone)
+      setCurrentPage(1)
     })
     .catch((error) => {
       //handleApiCallFailure(error)
@@ -102,6 +133,22 @@ function App() {
       </Navbar>
       <LoginPage showModal={showLogin} onModalClose={handleLoginClose} onLoginSubmit={handleLoginSubmit}/>
       <Filter onSubmitHandler={handleFilterSubmit}/>
+      <span>{`Page: ${currentPage}`}</span>
+      <Container>
+        <Row>
+          <Col>
+            <Nav variant="pills" defaultActiveKey="all" className="justify-content-md-center">
+              <Nav.Item>
+                <Nav.Link eventKey="all" onClick={() => retrieveNextPage()}>Next Page</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+              <Nav.Link eventKey="favourites" onClick={() => retrievePrevPage()}>Previous Page</Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Col>
+        </Row>
+        <br/>
+      </Container>
       {
         userLoggedIn ? 
         <Container>
