@@ -1,7 +1,7 @@
 // Filter.js
 import { useState } from 'react';
 import { districts } from "../../utils/districts";
-import Form from 'react-bootstrap/Form';
+import { Form, InputGroup, Button, Row, Col, Container } from 'react-bootstrap' 
 import './Filter.css';
 
 function Filter({onSubmitHandler}) {
@@ -62,7 +62,7 @@ function Filter({onSubmitHandler}) {
       initialQuery = `${initialQuery}&district=${districtsList}`
     }
     if (bedroomNumber) {
-      initialQuery = `${initialQuery}&district=${districtsList}`
+      initialQuery = `${initialQuery}&bedroom=${bedroomNumber}`
     }
     if (rentLowerBound) {
       initialQuery = `${initialQuery}&rent_gt=${rentLowerBound}`
@@ -77,78 +77,80 @@ function Filter({onSubmitHandler}) {
   }
 
 	return (
-    <>
-      <div>
-        <label htmlFor="districts"> City: </label>
-        <Form.Select 
-          onChange={handleCityChange}
-          value={selectedCity}>
-          <option value="Taipei">Taipei</option>
-          <option value="New Taipei">New Taipei</option>
-        </Form.Select>
-      </div>
-      <div>
-        <label htmlFor="districts"> Districts: </label>
-        <Form>
-          <div className="districts-list-item" className="mb-3">
-            { currentDistricts.map((name, index) => {
-              return (
-                
-                  <Form.Check
-                    inline
-                    label={`${name}`}
-                    name="group1"
-                    type='checkbox'
-                    id={`inline-checkbox-${index}`}
-                  />
-                
-              );
-            })}
-          </div>
-        </Form>
-      </div>
-      
-      
-      <div>
-        <label htmlFor="bedroomNumber"> No. of Bedrooms: </label>
-        <input
-          type="text"
-          placeholder="Enter number of bedroom"
-          value={bedroomNumber}
-          onChange={handleBedroomNumberChange}
-        />
-      </div>
-      <div className="inputContainer">
-        <div>
-          <label htmlFor="rentLowerBound">Min Rent</label>
-          <input
-            type="number"
-            id="rentLowerBound"
-            value={rentLowerBound}
-            onChange={handleRentLowerBoundChange}
-          />
-        </div>
-        <span>-</span>
-        <div>
-          <label htmlFor="rentUpperBound">Max Rent</label>
-          <input
-            type="number"
-            id="rentUpperBound"
-            value={rentUpperBound}
-            onChange={handleRentUpperBoundChange}
-          />
-        </div>
-      </div>
-      <div>
-        <label htmlFor="closestMrt"> Closest MRT: </label>
-        <input
-          type="text"
-          placeholder="Type in a MRT Station Name, e.g: Dongmen"
-          value={closestMrt}
-          onChange={handleClosestMrtChange}
-        />
-      </div>
-      <button onClick={handleFilterSubmit}>Search</button>
+  	<>
+			<Container>
+				<Row className="justify-content-md-center">
+					<Form.Label htmlFor="city">City</Form.Label>
+					<Form.Select 
+						onChange={handleCityChange}
+						value={selectedCity}>
+						<option value="Taipei">Taipei</option>
+						<option value="New Taipei">New Taipei</option>
+					</Form.Select>
+				</Row>
+				<Row>
+					<Form.Label htmlFor="districts">Districts</Form.Label>
+					<Form>
+						<div className="mb-3">
+							{ currentDistricts.map((name, index) => {
+								return (
+										<Form.Check
+											inline
+											label={`${name}`}
+											name="group1"
+											type='checkbox'
+											id={`inline-checkbox-${index}`}
+											onChange={() => handleDistrictsChange(index)}
+										/>
+									
+								);
+							})}
+						</div>
+					</Form>
+				</Row>
+				<Row>
+					<Col>
+						<Form>
+							<Form.Label htmlFor="bedroomNumber">No. of Bedrooms</Form.Label>
+							<Form.Control
+								type="text"
+								placeholder="Enter number of bedroom"
+								value={bedroomNumber}
+								onChange={handleBedroomNumberChange}
+							/>
+						</Form>
+					</Col>
+					<Col>
+						<Form>
+							<Form.Label htmlFor="closestMrt">Closest MRT</Form.Label>
+							<Form.Control
+								placeholder="Type in a MRT Station Name, e.g: Dongmen"
+								value={closestMrt}
+								onChange={handleClosestMrtChange} />
+						</Form>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<Form>
+							<InputGroup className="mb-3">
+								<InputGroup.Text>Min and Max Rent</InputGroup.Text>
+								<Form.Control
+									placeholder="Min Rent"
+									id="rentLowerBound"
+									value={rentLowerBound}
+									onChange={handleRentLowerBoundChange} />
+								<Form.Control 
+									placeholder="Max Rent"
+									id="rentUpperBound"
+									value={rentUpperBound}
+									onChange={handleRentUpperBoundChange} />
+							</InputGroup>
+						</Form>
+					</Col>
+				</Row>
+				<Button onClick={handleFilterSubmit}>Search</Button>
+			</Container>
     </>
   )
 }

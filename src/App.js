@@ -21,8 +21,10 @@ function App() {
   }, [query]);
 
   const retrieveAll = () => {
+    console.log('API call', `/properties${query}`)
     backendAPI.get(`/properties${query}`)
     .then((response) => {
+      console.log('GET data', response.data)
       setData(response.data)
     })
     .catch((error) => {
@@ -49,6 +51,7 @@ function App() {
   }
 
   const handleFilterSubmit = (query) => {
+    console.log('from filter', query)
     setQuery(query)
   }
 
@@ -110,7 +113,7 @@ function App() {
           </Nav.Item>
         </Nav> : null
       }
-      <Container className='p-4'>  
+      <Container fluid>  
         <Row xs="3">
           {
             data.map((item,key) =>
