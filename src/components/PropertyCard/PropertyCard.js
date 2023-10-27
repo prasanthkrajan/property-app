@@ -1,7 +1,7 @@
 // PropertyCard.js
 import { useState } from 'react';
 import './PropertyCard.css';
-import { Card, Button } from 'react-bootstrap'; 
+import { Card, Button, Container, Row, Col } from 'react-bootstrap'; 
 import DeletePage from '../../pages/DeletePage/DeletePage'; 
 import EditPage from '../../pages/EditPage/EditPage';
 import backendAPI from "../../api/backendapi"; 
@@ -55,13 +55,16 @@ function PropertyCard({ resource, showFavButton, showAdminButtons, onCardDelete,
             {resource['full_address']}
           </Card.Text> 
           <Card.Text>  
-            {resource['closest_mrt']}
+            Closest MRT: {resource['closest_mrt']}
+          </Card.Text> 
+          <Card.Text>  
+            Bedroom: {resource['bedroom']}, Bath: {resource['bathroom']}
           </Card.Text>   
           {
             showAdminButtons ? 
             <Card.Text>
-              <Button variant="primary" onClick={() => setShowEdit(true)}>Edit</Button> 
-              <Button variant="primary" onClick={() => setShowDelete(true)}>Delete</Button>
+              <Button variant="primary" onClick={() => setShowEdit(true)}>Edit</Button>
+                  <Button variant="primary" onClick={() => setShowDelete(true)}>Delete</Button>
             </Card.Text> : null
           }
           {

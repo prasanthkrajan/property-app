@@ -38,7 +38,7 @@ function DeletePage({ showModal, onModalClose, onDeleteSubmit, resource }) {
 
         <Modal.Footer>
           <Button variant="secondary" onClick={onModalClose}>Cancel</Button>
-          <Button variant="primary" onClick={handleDelete}>Delete</Button>
+          <Button variant="danger" onClick={handleDelete}>Delete</Button>
         </Modal.Footer>
       </Modal>
     </div>

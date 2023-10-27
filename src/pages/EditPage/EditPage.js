@@ -16,8 +16,6 @@ function EditPage({
   const [ bedroom, setBedroom ] = useState(resource['bedroom'])
   const [ bathroom, setBathroom ] = useState(resource['bathroom'])
   const [ rent, setRent ] = useState(resource['rent'])
-  const [ sizePing, setSizePing ] = useState(resource['floor_size_in_ping'])
-  const [ sizeSqft, setSizeSqft ] = useState(resource['floor_size_in_sqft'])
   
   const handleEdit = () => {
     backendAPI.put(`/properties/${resource['id']}`, {
@@ -26,9 +24,7 @@ function EditPage({
         title: title,
         bedroom: bedroom,
         bathroom: bathroom,
-        rent: rent,
-        floor_size_in_ping: sizePing,
-        floor_size_in_sqft: sizeSqft
+        rent: rent
       }
     }, config)
     .then((response) => {
@@ -50,6 +46,21 @@ function EditPage({
     console.log(error.message);
   }
 
+  const handleBedroomChange = (event) => {
+    const result = event.target.value.replace(/\D/g, '');
+    setBedroom(result)
+  }
+
+  const handleBathroomChange = (event) => {
+    const result = event.target.value.replace(/\D/g, '');
+    setBathroom(result)
+  }
+
+  const handleRentChange = (event) => {
+    const result = event.target.value.replace(/\D/g, '');
+    setRent(result)
+  }
+
   return (
     <div className="modal show" style={{ display: 'block', position: 'initial' }}>
     <Modal show={showModal}>
@@ -66,6 +77,30 @@ function EditPage({
               placeholder="Edit Title" 
               value={title} 
               onChange={(e) => setTitle(e.target.value)}/>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Bedroom</Form.Label>
+            <Form.Control 
+              type="text" 
+              placeholder="Edit Bedroom" 
+              value={bedroom} 
+              onChange={handleBedroomChange}/>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Bathroom</Form.Label>
+            <Form.Control 
+              type="text" 
+              placeholder="Edit Bathroom" 
+              value={bathroom} 
+              onChange={handleBathroomChange}/>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Rent</Form.Label>
+            <Form.Control 
+              type="text" 
+              placeholder="Edit Rent" 
+              value={rent} 
+              onChange={handleRentChange}/>
           </Form.Group>
         </Form>
       </Modal.Body>
