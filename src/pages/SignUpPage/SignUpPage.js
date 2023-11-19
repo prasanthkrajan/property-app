@@ -1,15 +1,15 @@
-// LoginPage.js
+// SignUpPage.js
 import { useState } from 'react';
 import React from 'react';
 import { Form, Modal, Button} from 'react-bootstrap'; 
 import backendAPI from "../../api/backendapi";   
 
-function LoginPage({ showModal, onModalClose, onLoginSubmit }) {
+function SignUpPage({ showModal, onModalClose, onLoginSubmit }) {
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
 
-  const handleLogin = () => {
-    backendAPI.post('/auth/login', {
+  const handleRegister = () => {
+    backendAPI.post('/auth/register', {
       email: email,
       password: password
     })
@@ -30,7 +30,7 @@ function LoginPage({ showModal, onModalClose, onLoginSubmit }) {
 
   const handleApiCallFailure = (error) => {
     console.log(error);
-    alert(error.message);
+    alert(error.message)
   }
 
   const handleEmailChange = (event) => {
@@ -45,7 +45,7 @@ function LoginPage({ showModal, onModalClose, onLoginSubmit }) {
     <div className="modal show" style={{ display: 'block', position: 'initial' }}>
       <Modal show={showModal}>
         <Modal.Header>
-          <Modal.Title>New User? Log In Now</Modal.Title>
+          <Modal.Title>New User? Sign Up Now</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -72,11 +72,11 @@ function LoginPage({ showModal, onModalClose, onLoginSubmit }) {
 
         <Modal.Footer>
           <Button variant="secondary" onClick={onModalClose}>Close</Button>
-          <Button variant="primary" onClick={handleLogin}>Log In</Button>
+          <Button variant="primary" onClick={handleRegister}>Sign Up</Button>
         </Modal.Footer>
       </Modal>
     </div>
   );
 }
 
-export default LoginPage;
+export default SignUpPage;

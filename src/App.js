@@ -5,6 +5,7 @@ import Filter from './components/Filter/Filter';
 import Sort from './components/Sort/Sort';
 import PropertyCard from './components/PropertyCard/PropertyCard';
 import LoginPage from './pages/LoginPage/LoginPage';
+import SignUpPage from './pages/SignUpPage/SignUpPage';
 import backendAPI from "./api/backendapi";
 import 'bootstrap/dist/css/bootstrap.min.css';  
 import {Container , Row, Col, Nav, Navbar} from 'react-bootstrap' 
@@ -16,6 +17,7 @@ function App() {
   const [ query, setQuery ] = useState('') 
   const [ data, setData ] = useState([])
   const [ showLogin, setShowLogin ] = useState(false)
+  const [ showSignUp, setShowSignUp ] = useState(false)
   const [ userLoggedIn, setUserLoggedIn ] = useState(currentUserObj ? true : false)
   const [ currentPage, setCurrentPage ] = useState(1)
 
@@ -91,6 +93,10 @@ function App() {
     setShowLogin(true)
   }
 
+  const handleSignUpClick = () => {
+    setShowSignUp(true)
+  }
+
   const handleLogoutClick = () => {
     setUserLoggedIn(false)
     localStorage.removeItem('currentUser')
@@ -101,8 +107,17 @@ function App() {
     setShowLogin(false)
   }
 
+  const handleSignUpClose = () => {
+    setShowSignUp(false)
+  }
+
   const handleLoginSubmit = () => {
     setShowLogin(false)
+    setUserLoggedIn(true)
+  }
+
+  const handleSignUpSubmit = () => {
+    setShowSignUp(false)
     setUserLoggedIn(true)
   }
 
@@ -132,12 +147,17 @@ function App() {
           <Navbar.Brand href="#home">Rental App</Navbar.Brand>
           <Nav className="me-auto">
             {
-              userLoggedIn ? <Nav.Link href="#" onClick={handleLogoutClick}>Log Out</Nav.Link> : <Nav.Link href="#" onClick={handleLoginClick}>Log In</Nav.Link>
+              userLoggedIn ? <Nav.Link href="#" onClick={handleLogoutClick}>Log Out</Nav.Link> : 
+              <>
+                <Nav.Link href="#" onClick={handleLoginClick}>Log In</Nav.Link>
+                <Nav.Link href="#" onClick={handleSignUpClick}>Sign Up</Nav.Link>
+              </>
             }
           </Nav>
         </Container>
       </Navbar>
       <LoginPage showModal={showLogin} onModalClose={handleLoginClose} onLoginSubmit={handleLoginSubmit}/>
+      <SignUpPage showModal={showSignUp} onModalClose={handleSignUpClose} onLoginSubmit={handleSignUpSubmit}/>
       <Filter onSubmitHandler={handleFilterSubmit}/>
       <Sort onSubmitHandler={handleSortSubmit}/>
       <span>{`Page: ${currentPage}`}</span>
