@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Form, Modal, Button} from 'react-bootstrap'; 
 import backendAPI from "../../api/backendapi";   
+import React from 'react';
 
 function EditPage({ 
     showModal, 

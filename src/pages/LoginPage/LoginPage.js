@@ -1,5 +1,6 @@
 // LoginPage.js
 import { useState } from 'react';
+import React from 'react';
 import './LoginPage.css';
 import { Form, Modal, Button} from 'react-bootstrap'; 
 import backendAPI from "../../api/backendapi";   

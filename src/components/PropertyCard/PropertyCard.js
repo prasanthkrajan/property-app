@@ -4,6 +4,7 @@ import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 import DeletePage from '../../pages/DeletePage/DeletePage'; 
 import EditPage from '../../pages/EditPage/EditPage';
 import backendAPI from "../../api/backendapi"; 
+import React from 'react';
 
 function PropertyCard({ resource, showFavButton, showAdminButtons, onCardDelete, onCardEdit}) {
   const currentUserObj = JSON.parse(localStorage.getItem('currentUser'))
