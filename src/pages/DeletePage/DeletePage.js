@@ -1,7 +1,5 @@
 // DeletePage.js
-import { useState } from 'react';
-import './DeletePage.css';
-import { Form, Modal, Button} from 'react-bootstrap'; 
+import { Modal, Button} from 'react-bootstrap'; 
 import backendAPI from "../../api/backendapi";   
 import React from 'react';
 

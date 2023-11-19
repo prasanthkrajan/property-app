@@ -1,7 +1,5 @@
 // Sort.js
-import { useState } from 'react';
-import { districts } from "../../utils/districts";
-import { Form, InputGroup, Button, Row, Col, Container } from 'react-bootstrap' 
+import { Form, Row, Container } from 'react-bootstrap' 
 import React from 'react';
 
 function Sort({onSubmitHandler}) {

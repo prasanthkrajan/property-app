@@ -1,6 +1,6 @@
 // PropertyCard.js
 import { useState } from 'react';
-import { Card, Button, Container, Row, Col } from 'react-bootstrap'; 
+import { Card, Button } from 'react-bootstrap'; 
 import DeletePage from '../../pages/DeletePage/DeletePage'; 
 import EditPage from '../../pages/EditPage/EditPage';
 import backendAPI from "../../api/backendapi"; 
